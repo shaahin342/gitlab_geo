@@ -1,4 +1,31 @@
-wget -O- https://raw.githubusercontent.com/docker/docker-install/master/install.sh | sh
+ 1. change the SSH port to 2222
+ 2. Create a folder /srv
+ 3. CD /srv
+ 4. mkdir -p /srv/gitlab-geo/gitlab/{config,data,logs}
+ 5. cd gitlab/
+ 6. ls -la
+ 7. ln -s /srv /gitlab-geo/gitlab/config /root
+ 8. cd /srv/gitlab-geo/gitlab/
+ 9. Build a docker image with my domain's wildcard certificate
+ 10. FROM gitlab/gitlab-ee:latest
 
-mkdir -p /opt/gitlab
+    COPY ca_serv.crt /usr/local/share/ca-certificates/
+
+    RUN update-ca-certificates &&\
+    echo 'Match User git' >> /etc/ssh/sshd_config &&\
+    echo ' AuthorizedKeysCommand /opt/gitlab/embedded/service/gitlab-shell/bin/gitlab-shell-authorized-keys-check' >> /etc/ssh/sshd_config &&\
+    echo ' AuthorizedKeysCommandUser git' >> /etc/ssh/sshd_config &&\
+    echo 'Match all' >> /etc/ssh/sshd_config
+
+11. docker build . -t gitlab/gitlab-16.11
+12. cp compose.yml /srv/gitlab-geo/
+13. vim compose.yml
+14  GITLAB_OMNIAUTH_CONFIG: |
+        external_url:    https://secondary.7homs.com
+
+    ports:
+        - "443:443"
+        - "80:80"
+        - "22:22"
+        - '54321:54321'
 
