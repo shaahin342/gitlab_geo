@@ -1,0 +1,4 @@
+wget -O- https://raw.githubusercontent.com/docker/docker-install/master/install.sh | sh
+
+mkdir -p /opt/gitlab
+
