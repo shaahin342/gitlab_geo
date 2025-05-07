@@ -1,8 +1,9 @@
  1. change the SSH port to 2222
+ https://docs.bitnami.com/aws/apps/gitlab/administration/create-ssl-certificate-nginx/
  2. Create a folder /srv
  3. CD /srv
  4. mkdir -p /srv/gitlab-geo/gitlab/{config,data,logs}
- 5. cd gitlab/
+ 5. cd /srv/gitlab-geo/gitlab/
  6. ls -la
  7. ln -s /srv /gitlab-geo/gitlab/config /root
  8. cd /srv/gitlab-geo/gitlab/
@@ -21,7 +22,7 @@
 12. cp compose.yml /srv/gitlab-geo/
 13. vim compose.yml
 14  GITLAB_OMNIAUTH_CONFIG: |
-        external_url:    'https://primary.7homs.com'
+        external_url:    'https://primary.7homes.com'
 
     ports:
         - "443:443"
@@ -47,10 +48,12 @@
 30. docker exec -it gitlab-geo-web-1 bash
 31. gitlab-ctl reconfigure
 32. gitlab-ctl restart
+gitlab-ctl set-geo-primary-node
 33. check the gitlab-geo-web-1 is now the primary Geo node
 34. Back to web server to check the gitlab-geo-web-1 is now the primary Geo node
-35. gitlab-ctl pg-password-md5 gitlab-geo-web-1
-36. gitlab-ctl pg-password-md5 gitlab-geo-web-2
+gitlab-ctl pg-password-md5 gitlab
+35. gitlab-ctl pg-password-md5 gitlab
+36. gitlab-ctl pg-password-md5 gitlab_replicator
 35. vim /root/gitlab-geo/gitlab/config/gitlab.rb
 36. vim /root/gitlab-geo/gitlab/config/gitlab.rb
 37. postgresql['sql_user_password'] = 'gitlab-geo-web-1 hash'
@@ -71,7 +74,7 @@
 52. gitlab-rake gitlab:check
 53. Gitlab configured to disable writing to authorized_keys file .. no (CHECK THIS)
 54. On the gitlab web go to Geo site and check the primary node
-55. go to setting --> Network --> Performance optimization UNCKECK Use_authorized_keys file to authenticate SSH keys
+55. go to setting --> Network --> Performance optimization UNCHECK Use_authorized_keys file to authenticate SSH keys
 56. gitlab-rake gitlab:geo:check
 
 
