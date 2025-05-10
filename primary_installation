@@ -1,6 +1,5 @@
  1. change the SSH port to 2222
  https://docs.bitnami.com/aws/apps/gitlab/administration/create-ssl-certificate-nginx/
- 2. Create a folder /srv
  3. CD /srv
  4. mkdir -p /srv/gitlab-geo/gitlab/{config,data,logs}
  5. cd /srv/gitlab-geo/gitlab/
@@ -19,8 +18,8 @@
     echo 'Match all' >> /etc/ssh/sshd_config
 
 11. docker build . -t gitlab/gitlab-16.11
-12. cp compose.yml /srv/gitlab-geo/
-13. vim compose.yml
+12. cp compose.yaml /srv/gitlab-geo/
+13. vim compose.yaml
 14  GITLAB_OMNIAUTH_CONFIG: |
         external_url:    'https://primary.7homes.com'
 
@@ -53,7 +52,7 @@ gitlab-ctl set-geo-primary-node
 34. Back to web server to check the gitlab-geo-web-1 is now the primary Geo node
 gitlab-ctl pg-password-md5 gitlab
 35. gitlab-ctl pg-password-md5 gitlab
-36. gitlab-ctl pg-password-md5 gitlab_replicator
+36. gitlab-ctl pg-password-md5 gitlab_replicatorn
 35. vim /root/gitlab-geo/gitlab/config/gitlab.rb
 36. vim /root/gitlab-geo/gitlab/config/gitlab.rb
 37. postgresql['sql_user_password'] = 'gitlab-geo-web-1 hash'
