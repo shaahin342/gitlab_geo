@@ -52,24 +52,23 @@ gitlab-ctl set-geo-primary-node
 34. Back to web server to check the gitlab-geo-web-1 is now the primary Geo node
 gitlab-ctl pg-password-md5 gitlab
 35. gitlab-ctl pg-password-md5 gitlab
-36. gitlab-ctl pg-password-md5 gitlab_replicatorn
+36. gitlab-ctl pg-password-md5 gitlab_replicator
 35. vim /root/gitlab-geo/gitlab/config/gitlab.rb
 36. vim /root/gitlab-geo/gitlab/config/gitlab.rb
 37. postgresql['sql_user_password'] = 'gitlab-geo-web-1 hash'
-38. gitlab_rails['db_password'] = 'gitlab-geo-web-1'
-39. postgresql['sql_replication_password'] = 'gitlab-geo-web-2 hash'
+39. postgresql['sql_replication_password'] = 'gitlab-geo-web-1 hash'
 40. postgresql['md5_auth_cidr_address'] = ['192.168.XX.XX/32', '192.168.XX.XX/32']
 41. postgresql['trust_auth_cidr_address'] = ['192.168.XX.XX/32', '192.168.XX.XX/32']
 42. postgresql['listen_address'] = 'gitlab-geo-web-1'
-43. gitlab_rails['auto_migrate] = false
+43. gitlab_rails['auto_migrate'] = false
 44. postgresql['max_replication_slots'] = 1
 45. gitlab-ctl reconfigure
 46. gitlab-ctl restart postgresql
 47. vim /root/gitlab-geo/gitlab/config/gitlab.rb
-48. gitlab_rails['auto_migrate] = false
+48. gitlab_rails['auto_migrate] = true
 49. gitlab-ctl reconfigure
 50. vim /root/gitlab-geo/gitlab/config/gitlab.rb
-51. roles['geo_primary_role']
+51. roles(['geo_primary_role'])
 52. gitlab-rake gitlab:check
 53. Gitlab configured to disable writing to authorized_keys file .. no (CHECK THIS)
 54. On the gitlab web go to Geo site and check the primary node
