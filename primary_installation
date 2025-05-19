@@ -61,7 +61,7 @@ gitlab-ctl pg-password-md5 gitlab
 40. postgresql['md5_auth_cidr_address'] = ['192.168.XX.XX/32', '192.168.XX.XX/32']
 41. postgresql['trust_auth_cidr_address'] = ['192.168.XX.XX/32', '192.168.XX.XX/32']
 42. postgresql['listen_address'] = 'gitlab-geo-web-1'
-43. gitlab_rails['auto_migrate] = false
+43. gitlab_rails['auto_migrate] = true
 44. postgresql['max_replication_slots'] = 1
 45. gitlab-ctl reconfigure
 46. gitlab-ctl restart postgresql
