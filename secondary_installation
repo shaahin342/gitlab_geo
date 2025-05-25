@@ -1,0 +1,14 @@
+roles(['geo_secondary_role'])
+
+postgresql['listen_address'] = '192.168.43.151'
+postgresql['md5_auth_cidr_addresses'] = ['192.168.43.151/32', '127.0.0.1/32']
+
+
+postgresql['sql_replication_password'] = '4a2ca32d3ba4715b8b630577f591dda6'
+postgresql['sql_user_password'] = '3dfc2ab2d209092e51e929f82078b053'
+gitlab_rails['db_password'] = 'p@ssw0rd342'
+
+
+gitlab_rails['geo_node_name'] = 'secondary'
+
+external_url 'http://gitlab2'
