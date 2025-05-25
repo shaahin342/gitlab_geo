@@ -1,0 +1,14 @@
+
+name: <your project name>
+services:
+    nginx:
+        container_name: my-web
+        networks:
+            - my-network
+        image: nginx
+
+networks:
+    my-network:
+        external: true
+        name: my-network
+
